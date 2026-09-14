@@ -636,6 +636,10 @@
             }
 
             // Start the master loop
+            CONFIG.images.forEach((imgUrl) => {
+                const img = new Image();
+                img.src = imgUrl;
+            });
             setInterval(rotateDisplay, CONFIG.tickDurationMs);
         </script>
     </body>
