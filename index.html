@@ -284,23 +284,13 @@
             }
 
             .qr-frame {
-                background: #f5efe4;
+                /* Bypasses Android Dark Mode by using an image instead of a solid color */
+                background-image: linear-gradient(#f5efe4, #f5efe4) !important;
+                background-color: transparent !important;
                 padding: 0.6vw;
                 border: 1px solid var(--gold-accent);
                 position: relative;
                 flex-shrink: 0;
-                animation: gentleBreathe 4s infinite alternate ease-in-out;
-                color-scheme: light !important;
-                forced-color-adjust: none !important;
-            }
-
-            @keyframes gentleBreathe {
-                0% {
-                    box-shadow: 0 0 0 rgba(252, 209, 22, 0);
-                }
-                100% {
-                    box-shadow: 0 0 20px rgba(252, 209, 22, 0.2);
-                }
             }
 
             /* Corner Ornaments for QR */
@@ -343,6 +333,7 @@
                 display: block;
                 width: 6.5vw !important;
                 height: 6.5vw !important;
+                background: transparent !important;
             }
 
             .qr-text h3 {
@@ -542,10 +533,10 @@
             if (document.getElementById("qrcode")) {
                 new QRCode(document.getElementById("qrcode"), {
                     text: CONFIG.qrLink,
-                    width: 200,
-                    height: 200,
+                    width: 300,
+                    height: 300,
                     colorDark: "#0a2e15", // Dark green
-                    colorLight: "#f5efe4", // Cream
+                    colorLight: "transparent", // Makes the canvas invisible to Dark Mode
                     correctLevel: QRCode.CorrectLevel.H,
                 });
             }
