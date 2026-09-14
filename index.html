@@ -289,6 +289,16 @@
                 border: 1px solid var(--gold-accent);
                 position: relative;
                 flex-shrink: 0;
+                animation: gentleBreathe 4s infinite alternate ease-in-out;
+            }
+
+            @keyframes gentleBreathe {
+                0% {
+                    box-shadow: 0 0 0 rgba(252, 209, 22, 0);
+                }
+                100% {
+                    box-shadow: 0 0 20px rgba(252, 209, 22, 0.2);
+                }
             }
 
             /* Corner Ornaments for QR */
@@ -329,22 +339,22 @@
             #qrcode canvas,
             #qrcode img {
                 display: block;
-                width: 5.5vw !important;
-                height: 5.5vw !important;
+                width: 6.5vw !important;
+                height: 6.5vw !important;
             }
 
             .qr-text h3 {
                 font-family: "Cormorant Garamond", serif;
-                font-size: 1.8vw;
+                font-size: 2vw;
                 font-weight: 400;
-                color: var(--text-light);
+                color: var(--gold-accent);
                 margin-bottom: 0.2vw;
             }
             .qr-text p {
-                font-size: 0.9vw;
-                letter-spacing: 0.1em;
+                font-size: 1vw;
+                letter-spacing: 0.15em;
                 text-transform: uppercase;
-                color: var(--gold-accent);
+                color: var(--desc-color);
                 font-weight: 300;
             }
         </style>
