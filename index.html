@@ -284,9 +284,8 @@
             }
 
             .qr-frame {
-                /* Bypasses Android Dark Mode by using an image instead of a solid color */
-                background-image: linear-gradient(#f5efe4, #f5efe4) !important;
-                background-color: transparent !important;
+                /* The 0.99 opacity forces the TV to skip dark mode inversion here */
+                background-color: rgba(245, 239, 228, 0.99) !important;
                 padding: 0.6vw;
                 border: 1px solid var(--gold-accent);
                 position: relative;
@@ -333,7 +332,6 @@
                 display: block;
                 width: 6.5vw !important;
                 height: 6.5vw !important;
-                background: transparent !important;
             }
 
             .qr-text h3 {
@@ -531,12 +529,15 @@
             // 2. Initialize QR Code locally
             // Make sure you still have <script src="...qrcode.min.js"> in your <head>
             if (document.getElementById("qrcode")) {
+                // Clears the div to prevent duplicates on reload
+                document.getElementById("qrcode").innerHTML = "";
+
                 new QRCode(document.getElementById("qrcode"), {
                     text: CONFIG.qrLink,
                     width: 300,
                     height: 300,
                     colorDark: "#0a2e15", // Dark green
-                    colorLight: "transparent", // Makes the canvas invisible to Dark Mode
+                    colorLight: "#f5efe4", // Cream Background
                     correctLevel: QRCode.CorrectLevel.H,
                 });
             }
