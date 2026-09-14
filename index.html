@@ -352,9 +352,6 @@
     <body>
         <div id="display-container">
             <div id="visual-zone">
-                <div id="bg-layer-1" class="bg-image zoom-in active"></div>
-                <div id="bg-layer-2" class="bg-image zoom-out"></div>
-
                 <div class="brand-overlay">
                     <div class="brand-logo" id="ui-brand-name">Brand</div>
                     <div class="brand-tagline" id="ui-brand-tagline">Tagline</div>
@@ -598,47 +595,35 @@
                 slideElements.push(slideDiv);
             });
 
-            // 5. Unified Display Loop (Syncs logic perfectly)
-            const bg1 = document.getElementById("bg-layer-1");
-            const bg2 = document.getElementById("bg-layer-2");
-            bg1.style.backgroundImage = `url('${CONFIG.images[0]}')`;
+            // 5. Unified Display Loop (Pre-rendered for TV GPU)
+            const visualZone = document.getElementById("visual-zone");
+            const bgElements = [];
+
+            // Inject all backgrounds on load
+            CONFIG.images.forEach((imgUrl, index) => {
+                const bgDiv = document.createElement("div");
+                bgDiv.className = `bg-image ${index === 0 ? "active" : ""}`;
+                bgDiv.style.backgroundImage = `url('${imgUrl}')`;
+                visualZone.insertBefore(bgDiv, document.querySelector(".brand-overlay"));
+                bgElements.push(bgDiv);
+            });
 
             let currentTickIndex = 0;
-            let activeLayer = 1;
 
             function rotateDisplay() {
                 if (slideElements.length <= 1) return;
 
-                // A. Fade out old slide
+                // Fade out current slide and background
                 slideElements[currentTickIndex % slideElements.length].classList.remove("active");
+                bgElements[currentTickIndex % bgElements.length].classList.remove("active");
 
-                // Increment index
                 currentTickIndex++;
 
-                // B. Fade in new slide
+                // Fade in new slide and background
                 slideElements[currentTickIndex % slideElements.length].classList.add("active");
-
-                // C. Swap Background Image simultaneously
-                const nextImgUrl = `url('${CONFIG.images[currentTickIndex % CONFIG.images.length]}')`;
-
-                if (activeLayer === 1) {
-                    bg2.style.backgroundImage = nextImgUrl;
-                    bg2.classList.add("active");
-                    bg1.classList.remove("active");
-                    activeLayer = 2;
-                } else {
-                    bg1.style.backgroundImage = nextImgUrl;
-                    bg1.classList.add("active");
-                    bg2.classList.remove("active");
-                    activeLayer = 1;
-                }
+                bgElements[currentTickIndex % bgElements.length].classList.add("active");
             }
 
-            // Start the master loop
-            CONFIG.images.forEach((imgUrl) => {
-                const img = new Image();
-                img.src = imgUrl;
-            });
             setInterval(rotateDisplay, CONFIG.tickDurationMs);
         </script>
     </body>
